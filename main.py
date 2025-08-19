@@ -1,5 +1,5 @@
 import pandas as pd
-URL = "https://github.com/owid/co2-data/raw/master/owid-co2-data.csv"
-df = pd.read_csv(URL, index_col=0, parse_dates=[0])
+df = pd.read_csv("data/owid-co2-data.csv")
 
-print(df.head(5))
+print(df.head())
+print(df.columns)
