@@ -19,6 +19,11 @@ global_trend = (
     .reset_index(name="global_co2")
 )
 
+russia_trend = df_small[df_small['country'] == "Russia"].sort_values("year")
+china_trend = df_small[df_small['country'] == "China"].sort_values("year")
+usa_trend = df_small[df_small['country']
+                     == "United States"].sort_values("year")
+
 print("Évolution globale des émissions (quelques lignes) :")
 print(global_trend.head(40))
 
@@ -26,12 +31,22 @@ print(global_trend.head(40))
 
 x = global_trend["year"]
 y = global_trend["global_co2"]
+xRussia = russia_trend["year"]
+yRussia = russia_trend["co2"]
+xChina = china_trend["year"]
+yChina = china_trend["co2"]
+xUsa = usa_trend["year"]
+yUsa = usa_trend["co2"]
 
 fig, ax = plt.subplots()
-ax.plot(x, y)
+ax.plot(x, y, label="global")
+ax.plot(xRussia, yRussia, label="Russia")
+ax.plot(xChina, yChina, label="China")
+ax.plot(xUsa, yUsa, label="USA")
 
 plt.xlabel("Année")
 plt.ylabel("Émissions de CO₂ (millions de tonnes)")
 plt.grid(True)
+plt.legend()
 
 plt.show()
