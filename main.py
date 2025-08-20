@@ -1,4 +1,10 @@
+"""
+Ce module contient un script d'analyse des données CO2.
+"""
+
+import matplotlib.pyplot as plt
 import pandas as pd
+
 df = pd.read_csv("data/owid-co2-data.csv")
 
 cols = ["country", "year", "co2", "co2_per_capita", "population"]
@@ -14,4 +20,18 @@ global_trend = (
 )
 
 print("Évolution globale des émissions (quelques lignes) :")
-print(global_trend.head(20))
+print(global_trend.head(40))
+
+# ----------- VISUALISATION -----------
+
+x = global_trend["year"]
+y = global_trend["global_co2"]
+
+fig, ax = plt.subplots()
+ax.plot(x, y)
+
+plt.xlabel("Année")
+plt.ylabel("Émissions de CO₂ (millions de tonnes)")
+plt.grid(True)
+
+plt.show()
