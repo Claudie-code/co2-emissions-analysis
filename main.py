@@ -2,6 +2,7 @@
 Ce module contient un script d'analyse des données CO2.
 """
 
+import plotly.express as px
 import matplotlib.pyplot as plt
 import pandas as pd
 
@@ -26,7 +27,6 @@ trends = {
 
 print("Évolution globale des émissions (quelques lignes) :")
 print(global_trend.head(40))
-print("trends", trends)
 
 # ----------- VISUALISATION -----------
 
@@ -41,3 +41,16 @@ plt.grid(True)
 plt.legend()
 
 plt.show()
+
+# ----------- VISUALISATION MAP ANIMATION -----------
+
+df["part_mondiale"] = df["co2"] / \
+    df.groupby("year")["co2"].transform("sum") * 100
+
+figure = px.choropleth(df,
+                       locations="iso_code",
+                       color="part_mondiale",
+                       hover_data=["country", "co2", "part_mondiale"],
+                       animation_frame="year")
+figure.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+figure.show()
