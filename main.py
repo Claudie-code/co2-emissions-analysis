@@ -5,6 +5,7 @@ Ce module contient un script d'analyse des données CO2.
 import plotly.express as px
 import matplotlib.pyplot as plt
 import pandas as pd
+import bar_chart_race as bcr
 
 df = pd.read_csv("data/owid-co2-data.csv")
 
@@ -54,3 +55,17 @@ figure = px.choropleth(df,
                        animation_frame="year")
 figure.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 figure.show()
+
+# ----------- VISUALISATION BAR CHART -----------
+
+df_race = df.pivot(index="year", columns="country", values="co2")
+df_race = df_race.fillna(0)
+
+bcr.bar_chart_race(df=df_race,
+                   filename='bar_race.mp4',   # <- crée un fichier vidéo
+                   orientation='h',
+                   sort='desc',
+                   n_bars=10,
+                   steps_per_period=10,
+                   period_length=500
+                   )
